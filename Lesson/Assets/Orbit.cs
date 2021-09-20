@@ -30,9 +30,6 @@ public class Orbit : MonoBehaviour
     public ParticleSpawn spawner;
     private bool grabbed;
 
-
-    public TextMeshPro debugText;
-
     private void Start()
     {
         startPos = transform.position;
@@ -46,12 +43,10 @@ public class Orbit : MonoBehaviour
     //called when an object is grabbed
     public void Grabbed()
     {
-        debugText.text += "\n Grabbed";
 
         grabbed = true;
         if (orbit)
         {
-            debugText.text += "\n In Grabbed, setting orbit to false";
 
             //resetting as if you're grabbing it and it hasn't orbitted
             firstTimeOrbiting = true;
@@ -96,12 +91,10 @@ public class Orbit : MonoBehaviour
     public void Released()
     {
         grabbed = false;
-        debugText.text = "released";
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        debugText.text += "\n OnTriggerEntered";
 
         if (!grabbed)
         {
@@ -109,7 +102,6 @@ public class Orbit : MonoBehaviour
             {
                 if (other.CompareTag("neutron"))
                 {
-                    debugText.text += "\n Not Grabbed no Orbit, setting Orbit to true";
                     print("Not Grabbed no Orbit, setting Orbit to true");
                     orbit = true;
                     center = other.transform;
@@ -189,7 +181,6 @@ public class Orbit : MonoBehaviour
 
                 if (firstTimeOrbiting)
                 {
-                    debugText.text += "\n OrbitStarted";
                     print("firstTimeOrbiting");
 
                     transform.position = initialOrbitTransform;
@@ -209,7 +200,6 @@ public class Orbit : MonoBehaviour
                 }
 
                 rotationAngle = (rotationSpeed * Time.deltaTime);
-                Debug.Log("rot angle" + rotationAngle);
                 transform.RotateAround(center.position, axis, rotationAngle);
                 desiredPosition = (transform.position - center.position).normalized * radius + center.position;
                 transform.position = desiredPosition;
