@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Orbit : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class Orbit : MonoBehaviour
     public ParticleSpawn spawner;
     private bool grabbed;
 
+
+    public TextMeshPro debugText;
+
     private void Start()
     {
         startPos = transform.position;
@@ -42,26 +46,18 @@ public class Orbit : MonoBehaviour
     //called when an object is grabbed
     public void Grabbed()
     {
+        debugText.text += "\n Grabbed";
+
         grabbed = true;
         if (orbit)
         {
+            debugText.text += "\n In Grabbed, setting orbit to false";
+
             //resetting as if you're grabbing it and it hasn't orbitted
             firstTimeOrbiting = true;
             orbit = false;
             center = null;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-
-
-            foreach (Orbit o in FindObjectsOfType<Orbit>())
-            {
-                if (o.CompareTag(tag))
-                {
-                    o.firstTimeOrbiting = true;
-                }
-            }
-            resetAllPos = false;
-
-
 
             if (CompareTag("proton"))
             {
@@ -77,6 +73,15 @@ public class Orbit : MonoBehaviour
                 angleDivide = 360 / FindObjectOfType<atommanager>().currentElectronNum;
             }
 
+            foreach (Orbit o in FindObjectsOfType<Orbit>())
+            {
+                print("reset all pos in grabbed");
+
+                if (o.CompareTag(tag))
+                {
+                    o.firstTimeOrbiting = true;
+                }
+            }
         }
 
         //the first time you grab it it should make it so you spawn a new object
@@ -91,18 +96,21 @@ public class Orbit : MonoBehaviour
     public void Released()
     {
         grabbed = false;
+        debugText.text = "released";
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        debugText.text += "\n OnTriggerEntered";
+
         if (!grabbed)
         {
             if (!orbit)
             {
-                print("Orbiting");
-
                 if (other.CompareTag("neutron"))
                 {
+                    debugText.text += "\n Not Grabbed no Orbit, setting Orbit to true";
+                    print("Not Grabbed no Orbit, setting Orbit to true");
                     orbit = true;
                     center = other.transform;
                     if (CompareTag("proton"))
@@ -139,10 +147,9 @@ public class Orbit : MonoBehaviour
     {
         if (!FindObjectOfType<Levelmanager>().gamePaused)
         {
+            Debug.Log(orbit);
             if (orbit)
             {
-                print(orbit);
-
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
 
                 if (particleIndex == 1)
@@ -168,6 +175,8 @@ public class Orbit : MonoBehaviour
 
                 if (resetAllPos)
                 {
+                    print("reset all pos");
+
                     foreach (Orbit o in FindObjectsOfType<Orbit>())
                     {
                         if (o.CompareTag(tag))
@@ -180,6 +189,9 @@ public class Orbit : MonoBehaviour
 
                 if (firstTimeOrbiting)
                 {
+                    debugText.text += "\n OrbitStarted";
+                    print("firstTimeOrbiting");
+
                     transform.position = initialOrbitTransform;
                     if (CompareTag("proton"))
                     {
@@ -197,6 +209,7 @@ public class Orbit : MonoBehaviour
                 }
 
                 rotationAngle = (rotationSpeed * Time.deltaTime);
+                Debug.Log("rot angle" + rotationAngle);
                 transform.RotateAround(center.position, axis, rotationAngle);
                 desiredPosition = (transform.position - center.position).normalized * radius + center.position;
                 transform.position = desiredPosition;

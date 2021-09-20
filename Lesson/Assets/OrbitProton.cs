@@ -52,18 +52,6 @@ public class OrbitProton : MonoBehaviour
             center = null;
             GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-
-            foreach (OrbitProton o in FindObjectsOfType<OrbitProton>())
-            {
-                if (o.CompareTag(tag))
-                {
-                    o.firstTimeOrbiting = true;
-                }
-            }
-            resetAllPos = false;
-
-
-
             if (CompareTag("proton"))
             {
                 print("Current proton num: " + FindObjectOfType<atommanager>().currentProtonNum);
@@ -78,6 +66,13 @@ public class OrbitProton : MonoBehaviour
                 angleDivide = 360 / FindObjectOfType<atommanager>().currentElectronNum;
             }
 
+            foreach (OrbitProton o in FindObjectsOfType<OrbitProton>())
+            {
+                if (o.CompareTag(tag))
+                {
+                    o.firstTimeOrbiting = true;
+                }
+            }
         }
 
         //the first time you grab it it should make it so you spawn a new object
