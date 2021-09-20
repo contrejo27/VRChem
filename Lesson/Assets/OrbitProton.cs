@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Orbit : MonoBehaviour
+public class OrbitProton : MonoBehaviour
 {
     bool orbit = false;
     public float rotationSpeed = 1.0f;
@@ -26,7 +26,7 @@ public class Orbit : MonoBehaviour
     bool firstTimeOrbiting = true;
 
     [HideInInspector]
-    public ParticleSpawn spawner;
+    public ParticleSpawnProton spawner;
     private bool grabbed;
 
     private void Start()
@@ -37,6 +37,7 @@ public class Orbit : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        orbit = false;
     }
 
     //called when an object is grabbed
@@ -52,7 +53,7 @@ public class Orbit : MonoBehaviour
             GetComponent<Rigidbody>().velocity = Vector3.zero;
 
 
-            foreach (Orbit o in FindObjectsOfType<Orbit>())
+            foreach (OrbitProton o in FindObjectsOfType<OrbitProton>())
             {
                 if (o.CompareTag(tag))
                 {
@@ -93,14 +94,13 @@ public class Orbit : MonoBehaviour
         grabbed = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (!grabbed)
         {
             if (!orbit)
             {
                 print("Orbiting");
-
                 if (other.CompareTag("neutron"))
                 {
                     orbit = true;
@@ -137,12 +137,12 @@ public class Orbit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //print(orbit);
+
         if (!FindObjectOfType<Levelmanager>().gamePaused)
         {
             if (orbit)
             {
-                print(orbit);
-
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
 
                 if (particleIndex == 1)
@@ -168,7 +168,7 @@ public class Orbit : MonoBehaviour
 
                 if (resetAllPos)
                 {
-                    foreach (Orbit o in FindObjectsOfType<Orbit>())
+                    foreach (OrbitProton o in FindObjectsOfType<OrbitProton>())
                     {
                         if (o.CompareTag(tag))
                         {

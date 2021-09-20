@@ -7,31 +7,35 @@ public class VRCameraBehavior : MonoBehaviour
     bool movementFrozen = false;
     Vector3 freezePos;
     public GameObject cam;
-
+    Vector3 lastPos;
     //public GameObject roomCenter;
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("walls"))
-        {
-            //cam.transform.position = Vector3.forward+ cam.transform.position;
-            movementFrozen = true;
 
-        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        //movementFrozen = false;
     }
 
     private void OnTriggerExit(Collider other)
     {
+        movementFrozen = false;
+        print(movementFrozen);
 
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
 
+        if (other.gameObject.CompareTag("walls"))
+        {
+            //transform.position = lastPos;
+           // cam.transform.position = transform.position;
 
+            //cam.transform.position = Vector3.forward+ cam.transform.position;
+            //movementFrozen = true;
+
+        }
     }
 
     // Start is called before the first frame update
@@ -44,18 +48,18 @@ public class VRCameraBehavior : MonoBehaviour
 
     private void LateUpdate()
     {
-        print(movementFrozen);
         if (movementFrozen)
         {
-            cam.transform.position = transform.position;
         }
         else
         {
-            transform.position = cam.transform.position;
+            //transform.position = cam.transform.position;
 
         }
+
         //cam.transform.position = Vector3.forward + cam.transform.position;
         //cam.transform.position = freezePos;
+        lastPos = transform.position;
     }
 
     // Update is called once per frame

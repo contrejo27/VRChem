@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5788064059624085525}
   - component: {fileID: 5788064059624085526}
   - component: {fileID: 5788064059624085527}
-  - component: {fileID: 2450866573014710347}
+  - component: {fileID: 8896285491700931626}
   m_Layer: 0
   m_Name: Red - Proton
   m_TagString: proton
@@ -147,8 +147,8 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2450866573014710347}
-        m_TargetAssemblyTypeName: Orbit, Assembly-CSharp
+      - m_Target: {fileID: 8896285491700931626}
+        m_TargetAssemblyTypeName: OrbitProton, Assembly-CSharp
         m_MethodName: Grabbed
         m_Mode: 1
         m_Arguments:
@@ -162,8 +162,8 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2450866573014710347}
-        m_TargetAssemblyTypeName: Orbit, Assembly-CSharp
+      - m_Target: {fileID: 8896285491700931626}
+        m_TargetAssemblyTypeName: OrbitProton, Assembly-CSharp
         m_MethodName: Released
         m_Mode: 1
         m_Arguments:
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
---- !u!114 &2450866573014710347
+--- !u!114 &8896285491700931626
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5788064059624085545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80aa1d15e1eac415abd00ec8b7da81d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e48db4ac97526442a3d0a42b722d55f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 150
